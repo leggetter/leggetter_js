@@ -27,12 +27,18 @@
       $(function(){
         
         var pendingDisplay = [];
+        var started = false;
         var emitter = new leggetter.twitter.TweetEmitter({
           "query": query
         });
         emitter.bind("tweetsReceived", function(tweets) {
           var imageTweets = findImageTweets(tweets.results);
           pendingDisplay = pendingDisplay.concat(imageTweets);
+          
+          if(!started){
+            started = true;
+            setTimeout(startDisplay, 0);
+          }
         });
         
         function findImageTweets(results){
@@ -94,8 +100,6 @@
             console.log(msg);
           }
         }
-        
-        startDisplay();
         
       });
       
