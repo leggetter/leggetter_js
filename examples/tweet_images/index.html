@@ -13,6 +13,8 @@
     </style>
   </head>
   <body>
+    <h1>Please be patient. Tweets and Images are loading...</h1>
+    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script src="../../js/leggetter/index.js"></script>
     <script src="../../js/leggetter/QueryHelper.js"></script>
@@ -36,6 +38,7 @@
           pendingDisplay = pendingDisplay.concat(imageTweets);
           
           if(!started){
+            $('h1').hide();
             started = true;
             setTimeout(startDisplay, 0);
           }

@@ -84,4 +84,4 @@ You can find the examples hosted on my website here:
 <http://www.leggetter.co.uk/leggetter_js/examples/>
 
 * Basic twitter search: http://www.leggetter.co.uk/leggetter_js/examples/simple_tweets/?q=tech
-* Image search with the help of <embed.ly>: http://www.leggetter.co.uk/leggetter_js/examples/tweet_images/?q=twitpic
+* Image search with the help of <http://embed.ly>: http://www.leggetter.co.uk/leggetter_js/examples/tweet_images/?q=twitpic
