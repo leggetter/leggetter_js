@@ -26,35 +26,14 @@
       var embedlyUrl = "http://api.embed.ly/1/oembed?key=dab7d3eab33211e0ae3f4040d3dc5c07&url=";
       $(function(){
         
+        var pendingDisplay = [];
         var emitter = new leggetter.twitter.TweetEmitter({
           "query": query
         });
         emitter.bind("tweetsReceived", function(tweets) {
           var imageTweets = findImageTweets(tweets.results);
-
-          $.each(imageTweets, function(i, tweet){
-
-            pendingDisplay.push(tweet);
-          });
+          pendingDisplay = pendingDisplay.concat(imageTweets);
         });
-        
-        var pendingDisplay = [];
-        
-        function displayImage(image, tweet){
-          var wrapper = $("<div class='image' />");
-          var imgEl = new Image();
-          wrapper.append(imgEl);
-          wrapper.hide();
-          $(document.body).prepend(wrapper);
-          
-          imgEl.onerror = function(){
-            wrapper.remove();
-          };
-          imgEl.onload = function(){
-            wrapper.fadeIn().animate({width:wrapper.css("height")}, "slow");
-          };
-          imgEl.src = image.url
-        };
         
         function findImageTweets(results){
           var imageTweets = [];
@@ -92,6 +71,22 @@
               
             }
           }, 2000);
+        };
+        
+        function displayImage(image, tweet){
+          var wrapper = $("<div class='image' />");
+          var imgEl = new Image();
+          wrapper.append(imgEl);
+          wrapper.hide();
+          $(document.body).prepend(wrapper);
+          
+          imgEl.onerror = function(){
+            wrapper.remove();
+          };
+          imgEl.onload = function(){
+            wrapper.fadeIn().animate({width:wrapper.css("height")}, "slow");
+          };
+          imgEl.src = image.url
         };
         
         function log(msg) {

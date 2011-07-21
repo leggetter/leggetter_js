@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <style type="text/css">
+      .tweet {
+        float: left;
+        height: 100px;
+        
+        background: #E9EAEE;
+        border: 2px solid white;
+        padding: 5px 10px 5px 10px;
+        width: 350px;
+        margin: 0 auto;
+        box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+      }
+      .tweet .profile {
+        float: left;
+        margin-right: 10px;
+      }
+      .tweet .profile .avatar {
+        width: 48px;
+        height: 48px;
+      }
+      .tweet.text {
+        float: left;
+        clear: right;
+        min-width: 200px;
+        height: 80px;
+      }
+      .tweet .meta {
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="../../js/leggetter/index.js"></script>
+    <script src="../../js/leggetter/QueryHelper.js"></script>
+    <script src="../../js/leggetter/EventEmitter.js"></script>
+    <script src="../../js/leggetter/twitter/TweetEmitter.js"></script>
+    <script>
+      
+      var queryHelper = leggetter.QueryHelper.getInstance();
+      var query = queryHelper.getQueryValue("q", "photo");
+      
+      $(function(){
+        
+        var pendingDisplay = [];
+        var emitter = new leggetter.twitter.TweetEmitter({
+          "query": query
+        });
+        emitter.bind("tweetsReceived", function(tweets) {
+          pendingDisplay = pendingDisplay.concat(tweets.results);
+        });
+              
+        function startDisplay(){
+          setInterval(function(){
+            
+            log("processing pending display: " + pendingDisplay.length);
+            
+            if(pendingDisplay.length > 0){
+              var tweet = pendingDisplay.shift();
+              
+              displayTweet(tweet);
+            }
+          }, 2000);
+        };
+        
+        function displayTweet(tweet) {
+          var tweetUI = $("<div class='tweet'>" +
+                            "<div class='profile'>" + 
+                              "<div class='name'>" +
+                                "<a href='http://twitter.com/" + tweet.from_user + "'>" + tweet.from_user + "</a>" +
+                              "</div>" +
+                              "<div class='avatar'><img src='" + tweet.profile_image_url + "' /></div>" +
+                            "</div>" +
+                            "<div class='message'>" +
+                              "<div class='text'>" + tweet.text + "</div>" +
+                            "</div>" +
+                            "<div class='meta'>" +
+                              "<div class='date'>" + shortDate(tweet.created_at) + "</div>" +
+                            "</div>" +
+                          "</div>"
+                        );
+            tweetUI.hide();
+            $(document.body).prepend(tweetUI);
+            tweetUI.fadeIn();
+        };
+        
+        function shortDate(dateStr) {
+          return "<span title='" + dateStr + "'>" + dateStr.substring(0, 10) + "</span>";
+        };
+        
+        function log(msg) {
+          if(console) {
+            console.log(msg);
+          }
+        }
+        
+        startDisplay();
+        
+      });
+    </script>
+  </body>
+</html>
