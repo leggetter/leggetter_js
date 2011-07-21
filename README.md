@@ -1,12 +1,12 @@
-# leggetter js
+# leggetterJS
 
-I've been planning on collating a bunch of JavaScript and examples for a long time and the plan is for `leggetter js` to be just that.
+I've been planning on collating a bunch of JavaScript and examples for a long time and the plan is for `leggetterJS` to be just that.
 
 ## Libraries
 
 ### /js/leggetter/index.js
 
-The main `leggetter js` file. It contains utilities:
+The main `leggetterJS` file. It contains utilities:
 
 * `leggetter.namespace(namespace)`
 
